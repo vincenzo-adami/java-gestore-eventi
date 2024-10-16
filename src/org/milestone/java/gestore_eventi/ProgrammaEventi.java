@@ -3,6 +3,8 @@ package org.milestone.java.gestore_eventi;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Comparator;
+import java.util.Collections;
 
 public class ProgrammaEventi {
   private String titolo;
@@ -41,7 +43,8 @@ public class ProgrammaEventi {
 
   public String getEventiInProgrammaOrdinati() {
     String risultato = this.titolo + "\n";
-    eventi.sort((a, b) -> a.getData().compareTo(b.getData()));
+    Comparator eventoComparator = new EventoComparator();
+    Collections.sort(eventi, eventoComparator);
     for (Evento evento : eventi) {
       risultato += evento.toString() + "\n";
     }
