@@ -64,6 +64,8 @@ public class Main {
 
     } catch (IllegalArgumentException e) {
       System.err.println(e.getMessage());
+    } finally {
+      scan.close();
     }
   }
 }
