@@ -1,6 +1,7 @@
 package org.milestone.java.gestore_eventi;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Evento {
   private String titolo;
@@ -32,7 +33,7 @@ public class Evento {
   }
 
   public void setData(LocalDate data) throws Exception {
-    if (!(data.isAfter(LocalDate.now()))) {
+    if (!(data.isBefore(LocalDate.now()))) {
       this.data = data;
     } else {
       throw new Exception("La data inserita è antecedente ad oggi");
@@ -57,5 +58,27 @@ public class Evento {
 
   public int getPostiPrenotati() {
     return postiPrenotati;
+  }
+
+  public void prenota() {
+    if (!(getData().isBefore(LocalDate.now()) || getPostiPrenotati() >= getPostiTotali())) {
+      this.postiPrenotati++;
+    } else {
+      System.out.println("L'evento è già avvenuto o non ci sono più posti disponibili");
+    }
+  }
+
+  public void disdici() {
+    if (!(getData().isBefore(LocalDate.now()) || getPostiPrenotati() <= 0)) {
+      this.postiPrenotati--;
+    } else {
+      System.out.println("L'evento è già avvenuto o non ci sono prenotazionio");
+    }
+  }
+
+  @Override
+  public String toString() {
+    DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/L/yyyy");
+    return data.format(formatoData) + " - " + titolo;
   }
 }
