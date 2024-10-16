@@ -1,7 +1,6 @@
 package org.milestone.java.gestore_eventi;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class Main3 {
   public static void main(String[] args) {
