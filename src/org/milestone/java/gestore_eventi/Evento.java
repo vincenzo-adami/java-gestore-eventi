@@ -10,15 +10,16 @@ public class Evento {
   private int postiPrenotati;
 
   Evento(String titolo, LocalDate data, int postiTotali) {
-    if (!(data.isBefore(LocalDate.now())) && (postiTotali > 0)) {
-      this.titolo = titolo;
-      setData(data);
-      setPostiTotali(postiTotali);
-      this.postiPrenotati = 0;
-    } else {
-      throw new IllegalArgumentException(
-          "La data inserito è antecedente ad oggi e/o il numero di posti totali non è maggiore di 0");
+    if ((data.isBefore(LocalDate.now()))) {
+      throw new IllegalArgumentException("La data inserito è antecedente ad oggi");
     }
+    if (postiTotali <= 0) {
+      throw new IllegalArgumentException("Il numero di posti totali non è maggiore di 0");
+    }
+    this.titolo = titolo;
+    setData(data);
+    setPostiTotali(postiTotali);
+    this.postiPrenotati = 0;
   }
 
   public void setTitolo(String titolo) {
@@ -30,11 +31,10 @@ public class Evento {
   }
 
   public void setData(LocalDate data) throws IllegalArgumentException {
-    if (!(data.isBefore(LocalDate.now()))) {
-      this.data = data;
-    } else {
+    if ((data.isBefore(LocalDate.now()))) {
       throw new IllegalArgumentException("La data inserita è antecedente ad oggi");
     }
+    this.data = data;
   }
 
   public LocalDate getData() {
@@ -42,11 +42,10 @@ public class Evento {
   }
 
   private void setPostiTotali(int postiTotali) throws IllegalArgumentException {
-    if (!(postiTotali <= 0)) {
-      this.postiTotali = postiTotali;
-    } else {
+    if ((postiTotali <= 0)) {
       throw new IllegalArgumentException("Il numero di posti totali inserito è minore o uguale a 0");
     }
+    this.postiTotali = postiTotali;
   }
 
   public int getPostiTotali() {
@@ -58,19 +57,23 @@ public class Evento {
   }
 
   public void prenota() throws Exception {
-    if (!(getData().isBefore(LocalDate.now()) || getPostiPrenotati() >= getPostiTotali())) {
-      this.postiPrenotati++;
-    } else {
+    if ((getData().isBefore(LocalDate.now()))) {
       throw new Exception("L'evento è già avvenuto o non ci sono più posti disponibili");
     }
+    if (getPostiPrenotati() >= getPostiTotali()) {
+      throw new Exception("L'evento non ha più posti disponibili");
+    }
+    this.postiPrenotati++;
   }
 
   public void disdici() throws Exception {
-    if (!(getData().isBefore(LocalDate.now()) || getPostiPrenotati() <= 0)) {
-      this.postiPrenotati--;
-    } else {
-      throw new Exception("L'evento è già avvenuto o non ci sono prenotazionio");
+    if ((getData().isBefore(LocalDate.now()))) {
+      throw new Exception("L'evento è già avvenuto");
     }
+    if (getPostiPrenotati() <= 0) {
+      throw new Exception("L'evento non ha prenotazioni");
+    }
+    this.postiPrenotati--;
   }
 
   @Override
