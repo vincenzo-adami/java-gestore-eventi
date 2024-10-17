@@ -2,28 +2,30 @@ package org.milestone.java.gestore_eventi;
 
 import java.time.LocalDate;
 import java.util.Scanner;
+import java.util.InputMismatchException;
+import java.time.DateTimeException;
 
 public class Main {
   public static void main(String[] args) {
 
     System.out.println("Inserisci un nuovo evento");
     Scanner scan = new Scanner(System.in);
-
-    System.out.println("Qual è il titolo dell'evento?");
-
-    Evento evento;
-    String titolo = scan.nextLine();
-
-    System.out.println("Inserisci la data dell'evento:\nanno?");
-    int anno = scan.nextInt();
-    System.out.println("mese?");
-    int mese = scan.nextInt();
-    System.out.println("giorno?");
-    int giorno = scan.nextInt();
-    System.err.println("Quanti saranno i posti totali?");
-    int postiTotali = scan.nextInt();
-
     try {
+
+      System.out.println("Qual è il titolo dell'evento?");
+
+      Evento evento;
+      String titolo = scan.nextLine();
+
+      System.out.println("Inserisci la data dell'evento:\nanno?");
+      int anno = scan.nextInt();
+      System.out.println("mese?");
+      int mese = scan.nextInt();
+      System.out.println("giorno?");
+      int giorno = scan.nextInt();
+      System.err.println("Quanti saranno i posti totali?");
+      int postiTotali = scan.nextInt();
+
       evento = new Evento(titolo, LocalDate.of(anno, mese, giorno), postiTotali);
 
       System.out.println("Vuoi prenotare dei posti all'evento? (es. true se sì altrimenti false)");
@@ -62,8 +64,19 @@ public class Main {
       System.out.printf("I posti disponibili per l'evento \"%s\" sono %d su %d\n", evento.getTitolo(),
           (evento.getPostiTotali() - evento.getPostiPrenotati()), evento.getPostiTotali());
 
-    } catch (IllegalArgumentException e) {
-      System.err.println(e.getMessage());
+    } catch (Exception e) {
+      if (e instanceof InputMismatchException) {
+        System.err.println("Inserito valore diverso da quanto richiesto");
+        return;
+      }
+      if (e instanceof DateTimeException) {
+        System.err.println("I valori della data inseriti non sono possibili: " + e.getMessage());
+        return;
+      }
+      if (e instanceof Exception) {
+        System.err.println(e.getMessage());
+      }
+      e.printStackTrace();
     } finally {
       scan.close();
     }
