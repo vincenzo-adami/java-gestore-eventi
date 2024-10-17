@@ -42,7 +42,7 @@ public class Concerto extends Evento {
   }
 
   private String getPrezzoFormattato(double prezzo) {
-    return String.format("%.2f", (prezzo)) + "€";
+    return String.format("%.2f€", (prezzo));
   }
 
   @Override
