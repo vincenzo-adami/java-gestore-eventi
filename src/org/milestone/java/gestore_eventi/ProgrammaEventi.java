@@ -49,7 +49,6 @@ public class ProgrammaEventi {
       risultato += evento.toString() + "\n";
     }
     return risultato;
-
   }
 
   @Override
@@ -60,5 +59,4 @@ public class ProgrammaEventi {
     }
     return stampa;
   }
-
 }

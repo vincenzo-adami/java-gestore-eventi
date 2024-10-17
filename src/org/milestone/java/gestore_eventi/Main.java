@@ -14,7 +14,7 @@ public class Main {
     Evento evento;
     String titolo = scan.nextLine();
 
-    System.out.println("Inserisci la data dell'evento\nanno?");
+    System.out.println("Inserisci la data dell'evento:\nanno?");
     int anno = scan.nextInt();
     System.out.println("mese?");
     int mese = scan.nextInt();
