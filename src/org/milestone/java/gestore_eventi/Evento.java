@@ -18,7 +18,7 @@ public class Evento {
     }
     this.titolo = titolo;
     setData(data);
-    setPostiTotali(postiTotali);
+    this.postiTotali = postiTotali;
     this.postiPrenotati = 0;
   }
 
@@ -41,13 +41,6 @@ public class Evento {
     return data;
   }
 
-  private void setPostiTotali(int postiTotali) throws IllegalArgumentException {
-    if ((postiTotali <= 0)) {
-      throw new IllegalArgumentException("Il numero di posti totali inserito è minore o uguale a 0");
-    }
-    this.postiTotali = postiTotali;
-  }
-
   public int getPostiTotali() {
     return postiTotali;
   }
@@ -57,20 +50,20 @@ public class Evento {
   }
 
   public void prenota() throws Exception {
-    if ((getData().isBefore(LocalDate.now()))) {
+    if ((data.isBefore(LocalDate.now()))) {
       throw new Exception("L'evento è già avvenuto o non ci sono più posti disponibili");
     }
-    if (getPostiPrenotati() >= getPostiTotali()) {
+    if (postiPrenotati >= postiTotali) {
       throw new Exception("L'evento non ha più posti disponibili");
     }
     this.postiPrenotati++;
   }
 
   public void disdici() throws Exception {
-    if ((getData().isBefore(LocalDate.now()))) {
+    if ((data.isBefore(LocalDate.now()))) {
       throw new Exception("L'evento è già avvenuto");
     }
-    if (getPostiPrenotati() <= 0) {
+    if (postiPrenotati <= 0) {
       throw new Exception("L'evento non ha prenotazioni");
     }
     this.postiPrenotati--;
