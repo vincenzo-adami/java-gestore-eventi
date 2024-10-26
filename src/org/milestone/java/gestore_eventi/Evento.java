@@ -51,7 +51,7 @@ public class Evento {
 
   public void prenota() throws Exception {
     if ((data.isBefore(LocalDate.now()))) {
-      throw new Exception("L'evento è già avvenuto o non ci sono più posti disponibili");
+      throw new Exception("L'evento è già avvenuto");
     }
     if (postiPrenotati >= postiTotali) {
       throw new Exception("L'evento non ha più posti disponibili");
